@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { Tweet, tweetProps } from "./Tweet";
 
 export type timelineProps = {
@@ -19,5 +20,5 @@ export const Timeline = ({ tweets }: timelineProps): JSX.Element | null => {
     );
   });
 
-  return <div className="timeline">{tweetList}</div>;
+  return <Box className="timeline">{tweetList}</Box>;
 };

@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { useCallback, useState } from "react";
 
 export type tweetProps = {
@@ -21,18 +22,18 @@ export const Tweet = ({
   }, [liked]);
 
   return (
-    <div className="tweet">
-      <div className="icon-container">{icon}</div>
-      <div className="body-container">
-        <div className="status-display">
+    <Box className="tweet">
+      <Box className="icon-container">{icon}</Box>
+      <Box className="body-container">
+        <Box className="status-display">
           <span className="display-name">{displayName}</span>
           <span className="display-name">@{accountName}</span>
-        </div>
-        <div className="content">{content}</div>
-        <div className="status-action">
+        </Box>
+        <Box className="content">{content}</Box>
+        <Box className="status-action">
           <span onClick={toggleLiked}>{liked ? "♥" : "♡"}</span>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };

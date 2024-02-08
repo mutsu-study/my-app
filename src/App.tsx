@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import { Timeline } from "./features/Timeline";
 import { TweetInput } from "./features/components/TweetInput";
 import { tweetProps } from "./features/Tweet";
+import { Box } from "@mui/material";
 
 const App = (): JSX.Element => {
   const [tweets, setTweets] = useState<tweetProps[]>([
@@ -30,10 +31,10 @@ const App = (): JSX.Element => {
   );
 
   return (
-    <div className="App">
+    <Box className="App">
       <TweetInput addTweet={addTweet} />
       <Timeline tweets={tweets} />
-    </div>
+    </Box>
   );
 };
 
