@@ -31,7 +31,7 @@ const App = (): JSX.Element => {
   );
 
   return (
-    <Box className="App">
+    <Box className="App" sx={{ m: 2 }}>
       <TweetInput addTweet={addTweet} />
       <Timeline tweets={tweets} />
     </Box>
