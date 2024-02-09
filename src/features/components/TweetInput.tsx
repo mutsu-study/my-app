@@ -1,15 +1,19 @@
 import { useCallback, useRef } from "react";
 import { tweetProps } from "../Tweet";
 import { Box, Button, InputAdornment, Stack, TextField } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 export type tweetInputProps = {
   addTweet: (tweet: tweetProps) => void;
 };
 
 export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
-  const { handleSubmit, control, reset } = useForm({
-    defaultValues: {},
+  const { handleSubmit, reset, register } = useForm<tweetProps>({
+    defaultValues: {
+      displayName: "",
+      accountName: "",
+      content: "",
+    },
   });
 
   //要素にアクセスするための参照を取得
@@ -21,7 +25,6 @@ export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
 
   const sendTweet = useCallback(() => {
     if (tweetRef.current) {
-      console.log(tweetRef);
       addTweet({
         id: new Date().getTime(),
         icon: "☠",
@@ -29,8 +32,9 @@ export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
         accountName: accontNameRef.current?.value ?? "",
         content: tweetRef.current.value,
       });
+      reset();
     }
-  }, [addTweet]);
+  }, [addTweet, reset]);
 
   return (
     <Box>
@@ -38,6 +42,7 @@ export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
         <Stack>
           <Box>
             <TextField
+              {...register("displayName")}
               label="displayName"
               variant="filled"
               inputRef={displayNameRef}
@@ -46,6 +51,7 @@ export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
               }}
             />
             <TextField
+              {...register("accountName")}
               label="accontName"
               variant="filled"
               inputRef={accontNameRef}
@@ -60,6 +66,7 @@ export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
         </Stack>
         <Box>
           <TextField
+            {...register("content")}
             className="tweet-textarea"
             rows={4}
             multiline
