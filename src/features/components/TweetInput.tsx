@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   FormControl,
-  Icon,
   InputAdornment,
   InputLabel,
   MenuItem,
