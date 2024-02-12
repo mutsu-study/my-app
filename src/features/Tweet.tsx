@@ -10,6 +10,7 @@ export type tweetProps = {
 };
 
 export const Tweet = ({
+  id,
   icon,
   displayName,
   accountName,
@@ -22,7 +23,7 @@ export const Tweet = ({
   }, [liked]);
 
   return (
-    <Box className="tweet">
+    <Box className="tweet" key={id}>
       <Box className="icon-container">{icon}</Box>
       <Box className="body-container">
         <Box className="status-display">

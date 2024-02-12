@@ -7,18 +7,20 @@ export type timelineProps = {
 
 export const Timeline = ({ tweets }: timelineProps): JSX.Element | null => {
   //tweetsからタイムラインを作成する
-  const tweetList = tweets.map((tweet) => {
-    return (
-      <Tweet
-        key={tweet.id}
-        id={tweet.id}
-        icon={tweet.icon}
-        displayName={tweet.displayName}
-        accountName={tweet.accountName}
-        content={tweet.content}
-      />
-    );
-  });
+  const tweetList = tweets
+    ? tweets.map((tweet) => {
+        return (
+          <Tweet
+            key={tweet.id}
+            id={tweet.id}
+            icon={tweet.icon}
+            displayName={tweet.displayName}
+            accountName={tweet.accountName}
+            content={tweet.content}
+          />
+        );
+      })
+    : null;
 
-  return <Box className="timeline">{tweetList}</Box>;
+  return <Box className="timeline">{tweetList ? tweetList : null}</Box>;
 };
