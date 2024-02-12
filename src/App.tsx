@@ -41,7 +41,6 @@ const App = (): JSX.Element => {
 
   const handleDeleteTweet = useCallback(
     (id: number) => {
-      console.log("");
       const newTweets = tweets.filter((tweets) => tweets.id !== id);
       setTweets(newTweets);
     },
