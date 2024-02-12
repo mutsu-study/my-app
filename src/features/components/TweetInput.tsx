@@ -1,10 +1,28 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { tweetProps } from "../Tweet";
-import { Box, Button, InputAdornment, Stack, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  Icon,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { useForm } from "react-hook-form";
 
 export type tweetInputProps = {
   addTweet: (tweet: tweetProps) => void;
+};
+
+export type Icon = {
+  iconId: string;
+  iconValue: string;
+  displayIcon: string;
 };
 
 export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
@@ -15,6 +33,36 @@ export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
       content: "",
     },
   });
+
+  const iconList: Icon[] = [
+    {
+      iconId: "shrimp",
+      iconValue: "shrimp",
+      displayIcon: "🦐",
+    },
+    {
+      iconId: "skull",
+      iconValue: "skull",
+      displayIcon: "☠",
+    },
+    {
+      iconId: "corn",
+      iconValue: "corn",
+      displayIcon: "🌽",
+    },
+    {
+      iconId: "bike",
+      iconValue: "bike",
+      displayIcon: "🏍",
+    },
+    {
+      iconId: "car",
+      iconValue: "car",
+      displayIcon: "🚗",
+    },
+  ];
+
+  const [icon, setIcon] = useState("");
 
   //要素にアクセスするための参照を取得
   // ref.currentのデフォルト値はnullにしておく
@@ -27,20 +75,40 @@ export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
     if (tweetRef.current) {
       addTweet({
         id: new Date().getTime(),
-        icon: "☠",
+        icon: icon,
         displayName: displayNameRef.current?.value ?? "",
         accountName: accontNameRef.current?.value ?? "",
         content: tweetRef.current.value,
       });
+      setIcon("");
       reset();
     }
-  }, [addTweet, reset]);
+  }, [addTweet, icon, reset]);
+
+  const handleSelectIcon = useCallback((event: SelectChangeEvent) => {
+    setIcon(event.target.value);
+  }, []);
 
   return (
     <Box>
       <form onSubmit={handleSubmit(sendTweet)}>
         <Stack>
           <Box>
+            <FormControl className="iconSelect" variant="filled">
+              <InputLabel className="iconSelect">icon</InputLabel>
+              <Select
+                {...register("icon")}
+                sx={{ mr: 1 }}
+                value={icon}
+                onChange={handleSelectIcon}
+              >
+                {iconList.map((icon) => (
+                  <MenuItem key={icon.iconId} value={icon.displayIcon}>
+                    {icon.displayIcon}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <TextField
               {...register("displayName")}
               label="displayName"
