@@ -20,7 +20,6 @@ export type tweetInputProps = {
 
 export type Icon = {
   iconId: string;
-  iconValue: string;
   displayIcon: string;
 };
 
@@ -36,27 +35,22 @@ export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
   const iconList: Icon[] = [
     {
       iconId: "shrimp",
-      iconValue: "shrimp",
       displayIcon: "🦐",
     },
     {
       iconId: "skull",
-      iconValue: "skull",
       displayIcon: "☠",
     },
     {
       iconId: "corn",
-      iconValue: "corn",
       displayIcon: "🌽",
     },
     {
       iconId: "bike",
-      iconValue: "bike",
       displayIcon: "🏍",
     },
     {
       iconId: "car",
-      iconValue: "car",
       displayIcon: "🚗",
     },
   ];
