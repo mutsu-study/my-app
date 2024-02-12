@@ -1,5 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, IconButton, Stack } from "@mui/material";
 import { useCallback, useState } from "react";
+import { Delete, Favorite } from "@mui/icons-material";
 
 export type tweetProps = {
   id: number;
@@ -31,9 +32,20 @@ export const Tweet = ({
           <span className="display-name">@{accountName}</span>
         </Box>
         <Box className="content">{content}</Box>
-        <Box className="status-action">
-          <span onClick={toggleLiked}>{liked ? "♥" : "♡"}</span>
-        </Box>
+        <Stack>
+          <Box className="status-action">
+            <IconButton
+              aria-label="favorite"
+              color={liked ? "primary" : "default"}
+              onClick={toggleLiked}
+            >
+              <Favorite />
+            </IconButton>
+            <IconButton aria-label="delete">
+              <Delete />
+            </IconButton>
+          </Box>
+        </Stack>
       </Box>
     </Box>
   );

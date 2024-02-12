@@ -13,6 +13,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { Send } from "@mui/icons-material";
 
 export type tweetInputProps = {
   addTweet: (tweet: tweetProps) => void;
@@ -141,6 +142,7 @@ export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
             variant="outlined"
             sx={{ mt: 1, mb: 1 }}
             onClick={sendTweet}
+            endIcon={<Send />}
           >
             Tweet
           </Button>
