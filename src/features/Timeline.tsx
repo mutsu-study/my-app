@@ -1,26 +1,28 @@
 import { Box } from "@mui/material";
-import { Tweet, tweetProps } from "./Tweet";
+import { TweetContent, tweetProps } from "./TweetContent";
 
 export type timelineProps = {
   tweets: tweetProps[];
+  handleDeleteTweet: (id: number) => void;
 };
 
-export const Timeline = ({ tweets }: timelineProps): JSX.Element | null => {
-  //tweetsからタイムラインを作成する
-  const tweetList = tweets
-    ? tweets.map((tweet) => {
-        return (
-          <Tweet
-            key={tweet.id}
-            id={tweet.id}
-            icon={tweet.icon}
-            displayName={tweet.displayName}
-            accountName={tweet.accountName}
-            content={tweet.content}
-          />
-        );
-      })
-    : null;
-
-  return <Box className="timeline">{tweetList ? tweetList : null}</Box>;
+export const Timeline = ({
+  tweets,
+  handleDeleteTweet,
+}: timelineProps): JSX.Element => {
+  return (
+    <Box className="timeline">
+      {tweets
+        ? tweets.map((tweet) => {
+            return (
+              <TweetContent
+                tweet={tweet}
+                key={tweet.id}
+                handleDeleteTweet={handleDeleteTweet}
+              />
+            );
+          })
+        : null}
+    </Box>
+  );
 };

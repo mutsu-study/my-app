@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { tweetProps } from "../Tweet";
+import { tweetProps } from "../TweetContent";
 import {
   Box,
   Button,

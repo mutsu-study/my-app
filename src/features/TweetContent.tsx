@@ -10,13 +10,16 @@ export type tweetProps = {
   content: string;
 };
 
-export const Tweet = ({
-  id,
-  icon,
-  displayName,
-  accountName,
-  content,
-}: tweetProps): JSX.Element => {
+type tweetContentProps = {
+  tweet: tweetProps;
+  key: number;
+  handleDeleteTweet: (id: number) => void;
+};
+
+export const TweetContent = ({
+  tweet,
+  handleDeleteTweet,
+}: tweetContentProps): JSX.Element => {
   const [liked, setLiked] = useState(false);
 
   const toggleLiked = useCallback(() => {
@@ -24,14 +27,14 @@ export const Tweet = ({
   }, [liked]);
 
   return (
-    <Box className="tweet" key={id}>
-      <Box className="icon-container">{icon}</Box>
+    <Box className="tweet" key={tweet.id}>
+      <Box className="icon-container">{tweet.icon}</Box>
       <Box className="body-container">
         <Box className="status-display">
-          <span className="display-name">{displayName}</span>
-          <span className="display-name">@{accountName}</span>
+          <span className="display-name">{tweet.displayName}</span>
+          <span className="display-name">@{tweet.accountName}</span>
         </Box>
-        <Box className="content">{content}</Box>
+        <Box className="content">{tweet.content}</Box>
         <Stack>
           <Box className="status-action">
             <IconButton
@@ -41,7 +44,10 @@ export const Tweet = ({
             >
               <Favorite />
             </IconButton>
-            <IconButton aria-label="delete">
+            <IconButton
+              aria-label="delete"
+              onClick={() => handleDeleteTweet(tweet.id)}
+            >
               <Delete />
             </IconButton>
           </Box>

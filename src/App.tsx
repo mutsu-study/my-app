@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Timeline } from "./features/Timeline";
 import { TweetInput } from "./features/components/TweetInput";
-import { tweetProps } from "./features/Tweet";
+import { tweetProps } from "./features/TweetContent";
 import { Box } from "@mui/material";
 
 const App = (): JSX.Element => {
@@ -39,6 +39,15 @@ const App = (): JSX.Element => {
     [tweets]
   );
 
+  const handleDeleteTweet = useCallback(
+    (id: number) => {
+      console.log("");
+      const newTweets = tweets.filter((tweets) => tweets.id !== id);
+      setTweets(newTweets);
+    },
+    [tweets]
+  );
+
   useEffect(() => {
     localStorage.setItem("tweet", JSON.stringify(tweets));
   }, [tweets]);
@@ -46,7 +55,7 @@ const App = (): JSX.Element => {
   return (
     <Box className="App" sx={{ m: 2 }}>
       <TweetInput addTweet={addTweet} />
-      <Timeline tweets={tweets} />
+      <Timeline tweets={tweets} handleDeleteTweet={handleDeleteTweet} />
     </Box>
   );
 };
