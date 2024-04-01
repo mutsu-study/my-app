@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormHelperText,
   Grid,
   InputAdornment,
   InputLabel,
@@ -26,7 +27,12 @@ export type Icon = {
 };
 
 export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
-  const { handleSubmit, reset, register } = useForm<tweetProps>({
+  const {
+    handleSubmit,
+    reset,
+    register,
+    formState: { errors },
+  } = useForm<tweetProps>({
     defaultValues: {
       displayName: "",
       accountName: "",
@@ -95,7 +101,8 @@ export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
                   <FormControl className="iconSelect" variant="filled">
                     <InputLabel className="iconSelect">icon</InputLabel>
                     <Select
-                      {...register("icon")}
+                      {...register("icon", { required: true })}
+                      error={!!errors.icon}
                       sx={{ mr: 1 }}
                       value={icon}
                       onChange={handleSelectIcon}
@@ -106,16 +113,25 @@ export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
                         </MenuItem>
                       ))}
                     </Select>
+                    {!!errors.icon ? (
+                      <FormHelperText error>
+                        {"アイコンを選択してください。"}
+                      </FormHelperText>
+                    ) : null}
                   </FormControl>
                 </Box>
               </Grid>
               <Grid item xs={3} className="displayName" sx={{ mr: 2 }}>
                 <Box className="displayName">
                   <TextField
-                    {...register("displayName")}
+                    {...register("displayName", { required: true })}
+                    error={!!errors.displayName}
                     label="displayName"
                     variant="filled"
                     inputRef={displayNameRef}
+                    helperText={
+                      !!errors.displayName && "表示名を入力してください。"
+                    }
                     sx={{ width: "100%" }}
                   />
                 </Box>
@@ -123,15 +139,30 @@ export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
               <Grid item xs={4}>
                 <Box className="accountName" sx={{ mr: 2 }}>
                   <TextField
-                    {...register("accountName")}
+                    {...register("accountName", {
+                      pattern: {
+                        value: /[A-Za-z]+/,
+                        message: "形式が不正です。",
+                      },
+                      required: {
+                        value: true,
+                        message: "アカウント名を入力してください。",
+                      },
+                    })}
+                    error={!!errors.accountName}
                     label="accontName"
                     variant="filled"
                     inputRef={accontNameRef}
-                    InputProps={{
+                    inputProps={{
                       startAdornment: (
                         <InputAdornment position="start">@</InputAdornment>
                       ),
                     }}
+                    helperText={
+                      !!errors.accountName && (
+                        <p>{errors.accountName.message}</p>
+                      )
+                    }
                     sx={{ width: "100%" }}
                   />
                 </Box>
@@ -148,18 +179,19 @@ export const TweetInput = ({ addTweet }: tweetInputProps): JSX.Element => {
               sx={{ mt: 1 }}
             />
           </Box>
+
+          <Box>
+            <Button
+              className="send-tweet"
+              variant="outlined"
+              type="submit"
+              sx={{ mt: 1, mb: 1 }}
+              endIcon={<Send />}
+            >
+              Tweet
+            </Button>
+          </Box>
         </form>
-        <Box>
-          <Button
-            className="send-tweet"
-            variant="outlined"
-            sx={{ mt: 1, mb: 1 }}
-            onClick={sendTweet}
-            endIcon={<Send />}
-          >
-            Tweet
-          </Button>
-        </Box>
       </Stack>
     </Box>
   );
